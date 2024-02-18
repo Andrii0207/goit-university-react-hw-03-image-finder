@@ -1,7 +1,13 @@
-export default function ImageGalleryItem() {
+import { GalleryItem, StyledImg } from './ImageGalleryItem.styled';
+
+export default function ImageGalleryItem({
+  tags,
+  webformatURL,
+  largeImageURL,
+}) {
   return (
-    <li className="gallery-item">
-      <img src="" alt="" />
-    </li>
+    <GalleryItem className="gallery-item">
+      <StyledImg src={webformatURL} alt={tags} />
+    </GalleryItem>
   );
 }

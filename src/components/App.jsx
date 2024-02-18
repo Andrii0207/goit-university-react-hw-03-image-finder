@@ -1,7 +1,9 @@
 import { Component } from 'react';
+import { ToastContainer } from 'react-toastify';
 import Searchbar from './Searchbar/Searchbar';
 // import ImageGallery from './ImageGallery/ImageGallery';
-import * as ImageService from './api/pixabay';
+import * as api from './api/pixabay';
+import ImageGallery from './ImageGallery/ImageGallery';
 
 export class App extends Component {
   state = {
@@ -20,20 +22,29 @@ export class App extends Component {
 
     const { query, page } = this.state;
     console.log('componentDidMount query is NOT empty');
-    ImageService.searchGallery(query, page);
+    api
+      .fetchImages(query, page)
+      .then(responce => this.setState({ images: responce }));
   }
 
-  componentDidUpdate(prevProps, _) {
+  async componentDidUpdate(prevProps, _) {
     const { query, page } = this.state;
 
     if (prevProps.query !== this.state.query) {
-      ImageService.searchGallery(query, page);
+      // console.log('componentDidUpdate prevProps.query:', prevProps.query);
+      // console.log('componentDidUpdate this.state.query:', this.state.query);
+      await api.fetchImages(query, page);
+    }
+    if (prevProps.images !== this.state.images) {
+      // console.log('componentDidUpdate prevProps:', prevProps.images);
+      // console.log('componentDidUpdate this.state:', this.state.images);
     }
   }
 
   handleFormSubmit = query => {
     this.setState({ query });
-    console.log('submit form:', query);
+    // console.log('submit form:', query);
+    // console.log('submit images:', this.state.images);
   };
 
   render() {
@@ -49,7 +60,8 @@ export class App extends Component {
       // }}
       >
         <Searchbar onSubmit={this.handleFormSubmit} />
-        {/* <ImageGallery /> */}
+        <ImageGallery images={this.state.images} />
+        <ToastContainer position="top-right" autoClose={5000} />
       </div>
     );
   }
