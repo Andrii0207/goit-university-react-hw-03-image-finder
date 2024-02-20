@@ -24,9 +24,8 @@ export default class Searchbar extends Component {
     if (this.state.query.trim() === '') {
       toast.warn('Please, enter your query for search', {
         position: 'top-right',
-        autoClose: 3000,
+        autoClose: 2000,
       });
-      return;
     }
     this.props.onSubmit(this.state.query);
     this.setState({ query: '' });
