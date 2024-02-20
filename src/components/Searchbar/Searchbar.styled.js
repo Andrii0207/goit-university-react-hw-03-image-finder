@@ -23,7 +23,7 @@ export const SearchForm = styled.form`
   display: flex;
   align-items: center;
   width: 100%;
-  max-width: 600px;
+  max-width: 400px;
   background-color: #fff;
   border-radius: 3px;
   overflow: hidden;
@@ -34,7 +34,6 @@ export const SearchFormBTN = styled.button`
   width: 48px;
   height: 48px;
   border: 0;
-  background-image: url('https://image.flaticon.com/icons/svg/149/149852.svg');
   background-size: 40%;
   background-repeat: no-repeat;
   background-position: center;
