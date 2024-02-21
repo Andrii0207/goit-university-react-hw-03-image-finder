@@ -15,9 +15,12 @@ export class App extends Component {
     images: [],
     query: '',
     page: 1,
-    showLoadMore: false,
+    isShowLoadMore: false,
+    isShowModal: false,
     isLoading: false,
     error: null,
+    modalImg: '',
+    textAlt: '',
   };
 
   componentDidUpdate(_, prevState) {
@@ -40,13 +43,23 @@ export class App extends Component {
 
           this.setState(prevState => ({
             images: [...prevState.images, ...hits],
-            showLoadMore: page < Math.ceil(totalHits / 12),
+            isShowLoadMore: page < Math.ceil(totalHits / 12),
           }));
         })
         .catch(error => this.setState({ error }))
         .finally(() => this.setState({ isLoading: false }));
     }
   }
+
+  handleOpenModal = e => {
+    console.log('Open Modal', e);
+    this.setState({ isShowModal: true });
+  };
+
+  handleCloseModal = () => {
+    console.log('Close Modal');
+    this.setState({ isShowModal: false, modalImg: '', textAlt: '' });
+  };
 
   handleLoadMore = () => {
     this.setState(prevState => ({ page: prevState.page + 1 }));
@@ -55,28 +68,38 @@ export class App extends Component {
 
   handleFormSubmit = query => {
     if (query === '') {
-      this.setState({ images: [], showLoadMore: false });
+      this.setState({ images: [], isShowLoadMore: false });
       return;
     }
     this.setState({
       query,
       images: [],
       page: 1,
-      showLoadMore: false,
+      isShowLoadMore: false,
     });
   };
 
   render() {
-    const { showLoadMore, isLoading } = this.state;
+    const { isShowLoadMore, isLoading, isShowModal } = this.state;
     return (
-      <>
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: '1fr',
+          gridGap: '16px',
+          paddingBottom: '24px',
+        }}
+      >
         <Searchbar onSubmit={this.handleFormSubmit} />
-        <ImageGallery images={this.state.images} />
-        {showLoadMore && <LoadMoreBTN onClick={this.handleLoadMore} />}
+        <ImageGallery
+          imageList={this.state.images}
+          onOpenModal={this.handleOpenModal}
+        />
+        {isShowLoadMore && <LoadMoreBTN onClick={this.handleLoadMore} />}
         {isLoading && <Spinner />}
-        <Modal />
+        {isShowModal && <Modal onCloseModal={this.handleCloseModal} />}
         <ToastContainer position="top-right" autoClose={2000} />
-      </>
+      </div>
     );
   }
 }

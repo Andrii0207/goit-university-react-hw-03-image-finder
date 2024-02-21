@@ -1,15 +1,16 @@
 import ImageGalleryItem from 'components/ImageGalleryItem/ImageGalleryItem';
 import { Gallery } from './ImageGallery.styled';
 
-export default function ImageGallery({ images }) {
+export default function ImageGallery({ imageList, onOpenModal }) {
   return (
     <Gallery className="gallery">
-      {images.map(({ id, webformatURL, largeImageURL, tags }) => (
+      {imageList.map(({ id, webformatURL, largeImageURL, tags }) => (
         <ImageGalleryItem
           key={id}
           tags={tags}
           webformatURL={webformatURL}
           largeImageURL={largeImageURL}
+          onOpenModal={onOpenModal}
         />
       ))}
     </Gallery>

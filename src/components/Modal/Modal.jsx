@@ -1,9 +1,11 @@
+import { StyledOverlay, StyledModal } from './Modal.styled';
+
 export default function Modal() {
   return (
-    <div className="overlay">
-      <div className="modal">
+    <StyledOverlay className="overlay">
+      <StyledModal className="modal">
         <img src="" alt="" />
-      </div>
-    </div>
+      </StyledModal>
+    </StyledOverlay>
   );
 }
