@@ -1,9 +1,10 @@
 
-const gallery = document.querySelector(".gallery")
-console.log(gallery)
+const observer = document.querySelector("#root")
+// console.log(observer)
 
 export default function smoothScroll() {
-    const { height: cardHeight } = gallery.firstElementChild.getBoundingClientRect();
+    const { height: cardHeight } = observer.lastElementChild.getBoundingClientRect();
+    console.log(cardHeight)
     window.scrollBy({
         top: cardHeight * 2,
         behavior: 'smooth',

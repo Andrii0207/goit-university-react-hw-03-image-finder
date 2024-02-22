@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { StyledBTN } from './Button.styled';
 
 export default function LoadMoreBTN({ onClick }) {
@@ -7,3 +8,7 @@ export default function LoadMoreBTN({ onClick }) {
     </StyledBTN>
   );
 }
+
+LoadMoreBTN.propTypes = {
+  onClick: PropTypes.func.isRequired,
+};

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { Component } from 'react';
 import { toast } from 'react-toastify';
 import { IoSearchOutline } from 'react-icons/io5';
@@ -34,20 +35,19 @@ export default class Searchbar extends Component {
 
   render() {
     return (
-      <HeaderStyled className="searchbar" onSubmit={this.handleSubmit}>
-        <SearchForm className="form">
-          <SearchFormBTN type="submit" className="button">
+      <HeaderStyled onSubmit={this.handleSubmit}>
+        <SearchForm>
+          <SearchFormBTN type="submit">
             <IoSearchOutline
               style={{
                 width: '24px',
                 height: '24px',
               }}
             />
-            <ButtonLabel className="button-label">Search</ButtonLabel>
+            <ButtonLabel>Search</ButtonLabel>
           </SearchFormBTN>
 
           <SearchInput
-            className="input"
             type="text"
             autoComplete="off"
             autoFocus
@@ -60,3 +60,7 @@ export default class Searchbar extends Component {
     );
   }
 }
+
+Searchbar.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+};

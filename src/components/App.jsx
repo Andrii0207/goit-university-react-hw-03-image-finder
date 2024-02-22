@@ -8,7 +8,7 @@ import ImageGallery from './ImageGallery/ImageGallery';
 import Modal from './Modal/Modal';
 import LoadMoreBTN from './Button/Button';
 import Spinner from './Loader/Loader';
-// import smoothScroll from './service/smoothScroll';
+import smoothScroll from './service/smoothScroll';
 
 export class App extends Component {
   state = {
@@ -51,19 +51,24 @@ export class App extends Component {
     }
   }
 
-  handleOpenModal = e => {
-    console.log('Open Modal', e);
-    this.setState({ isShowModal: true });
+  handleOpenModal = ({ modalImg, textAlt }) => {
+    this.setState({
+      isShowModal: true,
+      modalImg,
+      textAlt,
+    });
   };
 
   handleCloseModal = () => {
-    console.log('Close Modal');
     this.setState({ isShowModal: false, modalImg: '', textAlt: '' });
   };
 
   handleLoadMore = () => {
     this.setState(prevState => ({ page: prevState.page + 1 }));
-    // smoothScroll();
+    if (!this.state.images) {
+      return;
+    }
+    smoothScroll();
   };
 
   handleFormSubmit = query => {
@@ -80,7 +85,8 @@ export class App extends Component {
   };
 
   render() {
-    const { isShowLoadMore, isLoading, isShowModal } = this.state;
+    const { isShowLoadMore, isLoading, isShowModal, modalImg, textAlt } =
+      this.state;
     return (
       <div
         style={{
@@ -93,11 +99,18 @@ export class App extends Component {
         <Searchbar onSubmit={this.handleFormSubmit} />
         <ImageGallery
           imageList={this.state.images}
-          onOpenModal={this.handleOpenModal}
+          openModal={this.handleOpenModal}
         />
         {isShowLoadMore && <LoadMoreBTN onClick={this.handleLoadMore} />}
         {isLoading && <Spinner />}
-        {isShowModal && <Modal onCloseModal={this.handleCloseModal} />}
+        {isShowModal && (
+          <Modal
+            onCloseModal={this.handleCloseModal}
+            modalImg={modalImg}
+            tag={textAlt}
+          />
+        )}
+
         <ToastContainer position="top-right" autoClose={2000} />
       </div>
     );

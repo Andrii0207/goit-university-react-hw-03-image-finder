@@ -11,11 +11,6 @@ axios.defaults.params = {
 
 export async function fetchImages(query, page = 1) {
     const { data } = await axios.get(`?q=${query}&page=${page}&key=${API_KEY}`)
-    console.log("fetchImages >>>", data)
     return data;
 }
 
-
-// id - уникальный идентификатор
-// webformatURL - ссылка на маленькое изображение для списка карточек
-// largeImageURL - ссылка на большое изображение для модального окна
