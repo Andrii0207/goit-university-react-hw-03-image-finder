@@ -3,7 +3,7 @@ import { Component } from 'react';
 import { createPortal } from 'react-dom';
 import { StyledOverlay, StyledModal } from './Modal.styled';
 
-const modalRoot = document.querySelector('#modal-root');
+// const modalRoot = document.querySelector('#modal-root');
 
 export default class Modal extends Component {
   componentDidMount() {
@@ -15,7 +15,7 @@ export default class Modal extends Component {
   }
 
   handlePressKey = e => {
-    if (e.code === 'Escape' || e.target === e.currentTarget) {
+    if (e.code === 'Escape') {
       this.props.onCloseModal();
     }
   };
@@ -32,8 +32,8 @@ export default class Modal extends Component {
         <StyledModal>
           <img src={this.props.modalImg} alt={this.props.textAlt} />
         </StyledModal>
-      </StyledOverlay>,
-      modalRoot
+      </StyledOverlay>
+      // modalRoot
     );
   }
 }
